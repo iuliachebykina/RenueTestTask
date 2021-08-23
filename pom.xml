@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>test</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>demo</name>
@@ -17,6 +17,7 @@
 	<properties>
 		<java.version>11</java.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -40,7 +41,10 @@
 		</dependency>
 	</dependencies>
 
+
 	<build>
+		<finalName>${project.artifactId}</finalName>
+
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -61,8 +65,8 @@
 						<configuration>
 							<classifier>spring-boot</classifier>
 							<mainClass>
-								com.example.demo.TestApplication
-							</mainClass>
+                                ru.renue.testTask.RenueTestApplication
+                            </mainClass>
 						</configuration>
 					</execution>
 				</executions>
