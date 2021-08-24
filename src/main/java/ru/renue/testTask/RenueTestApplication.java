@@ -55,7 +55,7 @@ public class RenueTestApplication implements CommandLineRunner {
 			log.error("Не удалось осуществить поиск");
 			return;
 		}
-		airports.forEach(a-> System.out.println(String.join(", ", a.subList(1, a.size()-1))));
+		airports.forEach(a-> System.out.println(String.join(", ", a.subList(1, a.size()))));
 		System.out.println("Количество найденных строк: " + airports.size());
 		System.out.println("Время, затраченное на поиск: " + time +" мс.");
 	}
