@@ -40,12 +40,12 @@ public class CsvParserService {
     }
 
     Collection<List<String>> getAirports(String substring) {
-        TreeMap<String, List<String>> airports = new TreeMap<>();
+        List<List<String>> airports = new ArrayList<>();
         String[] line;
         try{
             while ((line = reader.readNext()) != null) {
                 if( line[column].toLowerCase(Locale.ROOT).startsWith(substring)){
-                    airports.put(line[column], List.of(line));
+                    airports.add(List.of(line));
                 }
             }
             reader.close();
@@ -53,6 +53,7 @@ public class CsvParserService {
             log.error(e.getMessage());
             return null;
         }
-        return airports.values();
+        airports.sort(Comparator.comparing(a -> a.get(column)));
+        return airports;
     }
 }
