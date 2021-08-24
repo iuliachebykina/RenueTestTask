@@ -46,6 +46,7 @@ public class RenueTestApplication implements CommandLineRunner {
 		if(in.hasNext()){
 			substring = in.next().toLowerCase(Locale.ROOT);
 		}
+		in.close();
 		var start = System.currentTimeMillis();
 		var airports = csvParser.getAirports(substring, column);
 		var end =  System.currentTimeMillis() - start;
