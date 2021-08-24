@@ -26,15 +26,11 @@ public class CsvParser {
     }
 
 
-    public Collection<List<String>> getAirports(String substring, Integer column) throws CsvValidationException, IOException {
+    public Collection<List<String>> getAirports(String substring, Integer column) {
         if(column != null)
             this.column = column;
         this.column--;
-        return getAirports(substring);
-    }
-
-    Collection<List<String>> getAirports(String substring) throws IOException, CsvValidationException {
-        if(column < 0 || column > 13){
+        if(this.column < 0 || this.column > 13){
             log.error("Такого столбца не существует");
             return null;
         }
@@ -42,14 +38,23 @@ public class CsvParser {
             log.error("Строка не передана");
             return null;
         }
+        return getAirports(substring);
+    }
+
+    Collection<List<String>> getAirports(String substring) {
         TreeMap<String, List<String>> airports = new TreeMap<>();
         String[] line;
-        while ((line = reader.readNext()) != null) {
-           if( line[column].toLowerCase(Locale.ROOT).startsWith(substring)){
-               airports.put(line[column], List.of(line));
-           }
+        try{
+            while ((line = reader.readNext()) != null) {
+                if( line[column].toLowerCase(Locale.ROOT).startsWith(substring)){
+                    airports.put(line[column], List.of(line));
+                }
+            }
+            reader.close();
+        } catch (Exception e){
+            log.error(e.getMessage());
+            return null;
         }
-        reader.close();
         return airports.values();
     }
 }

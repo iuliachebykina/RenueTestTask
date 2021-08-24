@@ -7,10 +7,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.io.BufferedReader;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Locale;
+import java.util.Scanner;
 
 @SpringBootApplication
 public class RenueTestApplication implements CommandLineRunner {
@@ -30,10 +30,6 @@ public class RenueTestApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws CsvValidationException, IOException {
-		System.out.print("Введите строку: ");
-		var in = new BufferedReader(new InputStreamReader(System.in));
-		String substring;
-		substring = in.readLine().toLowerCase(Locale.ROOT);
 		Integer column = null;
 		if (args.length > 0) {
 			try {
@@ -44,10 +40,18 @@ public class RenueTestApplication implements CommandLineRunner {
 			}
 
 		}
+		System.out.print("Введите строку: ");
+		var in = new Scanner(System.in);
+		String substring = null;
+		if(in.hasNext()){
+			substring = in.next().toLowerCase(Locale.ROOT);
+		}
 		var start = System.currentTimeMillis();
 		var airports = csvParser.getAirports(substring, column);
-		if(airports == null)
+		if(airports == null) {
+			log.error("Не удалось осуществить поиск");
 			return;
+		}
 		var end =  System.currentTimeMillis() - start;
 		airports.forEach(a-> System.out.println(String.join(", ", a.subList(1, a.size()-1))));
 		System.out.println("Количество найденных строк: " + airports.size());
