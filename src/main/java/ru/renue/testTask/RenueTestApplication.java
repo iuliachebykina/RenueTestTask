@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import ru.renue.testTask.service.CsvParserService;
 
 
 import java.io.IOException;
@@ -15,11 +16,11 @@ import java.util.Scanner;
 @SpringBootApplication
 public class RenueTestApplication implements CommandLineRunner {
 
-	private final CsvParser csvParser;
+	private final CsvParserService csvParser;
 	private final static Logger log = LoggerFactory.getLogger(RenueTestApplication.class);
 
 
-	public RenueTestApplication(CsvParser csvParser) {
+	public RenueTestApplication(CsvParserService csvParser) {
 		this.csvParser = csvParser;
 	}
 

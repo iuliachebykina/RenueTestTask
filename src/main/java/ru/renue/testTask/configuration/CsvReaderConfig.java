@@ -1,4 +1,4 @@
-package ru.renue.testTask;
+package ru.renue.testTask.configuration;
 
 import com.opencsv.CSVReader;
 import org.springframework.context.annotation.Bean;

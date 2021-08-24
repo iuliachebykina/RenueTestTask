@@ -1,27 +1,25 @@
-package ru.renue.testTask;
+package ru.renue.testTask.service;
 
 
 import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.*;
 
 @Service
-public class CsvParser {
+public class CsvParserService {
 
     @Value("${app.column}")
     private Integer column;
     private final CSVReader reader;
 
-    private final static Logger log = LoggerFactory.getLogger(CsvParser.class);
+    private final static Logger log = LoggerFactory.getLogger(CsvParserService.class);
 
 
-    public CsvParser(CSVReader reader) {
+    public CsvParserService(CSVReader reader) {
         this.reader = reader;
     }
 
