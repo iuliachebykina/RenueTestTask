@@ -10,6 +10,7 @@ import ru.renue.testTask.service.CsvParserService;
 
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -55,7 +56,7 @@ public class RenueTestApplication implements CommandLineRunner {
 			log.error("Не удалось осуществить поиск");
 			return;
 		}
-		airports.forEach(a-> System.out.println(String.join(", ", a.subList(1, a.size()))));
+		airports.forEach(a-> System.out.println(String.join(", ", List.of(a).subList(1, a.length))));
 		System.out.println("Количество найденных строк: " + airports.size());
 		System.out.println("Время, затраченное на поиск: " + time +" мс.");
 	}

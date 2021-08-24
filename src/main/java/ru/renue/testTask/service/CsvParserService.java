@@ -24,7 +24,7 @@ public class CsvParserService {
     }
 
 
-    public Collection<List<String>> getAirports(String substring, Integer column) {
+    public List<String[]> getAirports(String substring, Integer column) {
         if(column != null)
             this.column = column;
         this.column--;
@@ -39,13 +39,13 @@ public class CsvParserService {
         return getAirports(substring);
     }
 
-    Collection<List<String>> getAirports(String substring) {
-        List<List<String>> airports = new ArrayList<>();
+    List<String[]> getAirports(String substring) {
+        List<String[]> airports = new ArrayList<>();
         String[] line;
         try{
             while ((line = reader.readNext()) != null) {
                 if( line[column].toLowerCase(Locale.ROOT).startsWith(substring)){
-                    airports.add(List.of(line));
+                    airports.add(line);
                 }
             }
             reader.close();
@@ -53,7 +53,7 @@ public class CsvParserService {
             log.error(e.getMessage());
             return null;
         }
-        airports.sort(Comparator.comparing(a -> a.get(column)));
+        airports.sort(Comparator.comparing(a -> a[column]));
         return airports;
     }
 }
