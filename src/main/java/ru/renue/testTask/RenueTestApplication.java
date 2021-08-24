@@ -48,11 +48,11 @@ public class RenueTestApplication implements CommandLineRunner {
 		}
 		var start = System.currentTimeMillis();
 		var airports = csvParser.getAirports(substring, column);
+		var end =  System.currentTimeMillis() - start;
 		if(airports == null) {
 			log.error("Не удалось осуществить поиск");
 			return;
 		}
-		var end =  System.currentTimeMillis() - start;
 		airports.forEach(a-> System.out.println(String.join(", ", a.subList(1, a.size()-1))));
 		System.out.println("Количество найденных строк: " + airports.size());
 		System.out.println("Время, затраченное на поиск: " + end +" мс.");
