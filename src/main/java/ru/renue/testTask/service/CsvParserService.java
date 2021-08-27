@@ -1,10 +1,6 @@
 package ru.renue.testTask.service;
 
 
-import com.opencsv.CSVReader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -12,48 +8,33 @@ import java.util.*;
 @Service
 public class CsvParserService {
 
-    @Value("${app.column}")
-    private Integer column;
-    private final CSVReader reader;
-
-    private final static Logger log = LoggerFactory.getLogger(CsvParserService.class);
 
 
-    public CsvParserService(CSVReader reader) {
-        this.reader = reader;
-    }
-
-
-    public List<String[]> getAirports(String substring, Integer column) {
-        if(column != null)
-            this.column = column;
-        this.column--;
-        if(this.column < 0 || this.column > 13){
-            log.error("Такого столбца не существует");
-            return null;
-        }
-        if(substring == null){
-            log.error("Строка не передана");
-            return null;
-        }
-        return getAirports(substring);
-    }
-
-    List<String[]> getAirports(String substring) {
+    public List<String[]> getAirports(List<String[]> data, String substring, Integer column) {
         List<String[]> airports = new ArrayList<>();
-        String[] line;
-        try{
-            while ((line = reader.readNext()) != null) {
-                if( line[column].toLowerCase(Locale.ROOT).startsWith(substring)){
-                    airports.add(line);
-                }
+
+        int index= data.size()/2+1;
+        while (index < data.size() && index >= 0){
+            if(data.get(index)[column].substring(0, substring.length()).compareTo(substring) < 0){
+                index += index/2+1;
+            } else if(data.get(index)[column].substring(0, substring.length()).compareTo(substring) > 0){
+                index -= index/2+1;
+            } else {
+                break;
             }
-            reader.close();
-        } catch (Exception e){
-            log.error(e.getMessage());
-            return null;
         }
-        airports.sort(Comparator.comparing(a -> a[column]));
+        if(index < 0 || index >= data.size()){
+            return airports;
+        }
+        while (index-1 >= 0 && data.get(index-1)[column].startsWith(substring)){
+            index--;
+        }
+
+        while (  index < data.size() && data.get(index)[column].startsWith(substring)){
+            airports.add(data.get(index));
+            index++;
+        }
         return airports;
+
     }
 }
