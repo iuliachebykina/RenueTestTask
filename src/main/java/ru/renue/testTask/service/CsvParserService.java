@@ -30,7 +30,7 @@ public class CsvParserService {
             index--;
         }
 
-        while (  index < data.size() && data.get(index)[column].startsWith(substring)){
+        while (index < data.size() && data.get(index)[column].startsWith(substring)){
             airports.add(data.get(index));
             index++;
         }
